@@ -1,0 +1,28 @@
+<div id="container">
+  @for (game of games; track $index) {
+    <div class="bg-img" style="background-image: url({{game.background_image}});">
+      <div class="overlay">
+        <p>{{game.name}}</p>
+        <div class="button-container">
+          @if(currentUser?.liked_ids?.includes(game.id)){
+            <mat-icon aria-label="remove favorite" class="fav" onclick="toggleLike(game)">favorite</mat-icon>
+          }@else  {
+            <mat-icon class="not-fav">favorite</mat-icon>
+          }
+          <button name="owned">
+          </button>
+          <label for="owned"></label>
+          <button>Backlog</button>
+        </div>
+       
+      </div>
+    </div>
+  }
+</div>
+<div id="footer">
+  <div id="pagination">
+    <mat-icon aria-label="previous page" id="previous-page">arrow_back</mat-icon>
+    <p id="currentPage">{{currentPage}}</p>
+    <mat-icon aria-label="next page" id="next-page">arrow_forward</mat-icon>
+  </div>
+</div>

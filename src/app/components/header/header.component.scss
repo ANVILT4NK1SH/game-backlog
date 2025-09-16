@@ -1,0 +1,78 @@
+.stellar-navbar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #004085;
+  /* Primary color for the navbar */
+  color: white;
+  padding: 0.5rem 1rem;
+  width: 100;
+  z-index: 10;
+}
+
+.stellar-navbar .brand-name {
+  transition: .5s;
+  padding: 10px;
+}
+
+.stellar-navbar .brand-name a {
+  font-size: xx-large;
+  font-weight: bold;
+  color: white;
+  /* Keeps the brand name white */
+  text-decoration: none;
+  text-shadow: 3px 5px rgba(0, 0, 0, 0.486);
+}
+
+.stellar-navbar .nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  /* Adds space between navigation items */
+}
+
+.stellar-navbar .nav-links a,
+.stellar-navbar .nav-links button {
+  background: none;
+  border: 1px solid white;
+  /* Border makes it stand out */
+  border-radius: 4px;
+  color: white;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.stellar-navbar .nav-links a:hover,
+.stellar-navbar .nav-links button:hover {
+  background-color: white;
+  color: #004085;
+  scale: 1.1;
+  /* Inverse the color scheme on hover */
+}
+
+/* Specific style for the logout button to differentiate it, if needed */
+.stellar-navbar .nav-links button {
+  background-color: transparent;
+  color: white;
+  border-color: white;
+  box-shadow:  3px 5px rgba(0, 0, 0, 0.486);
+  transition: 0.5s;
+}
+
+.stellar-navbar .nav-links button:hover {
+  color: #004085;
+  background-color: white;
+  border-color: #004085;
+  scale: 1.1;
+  transition: 0.5s;
+}
+
+.stellar-navbar .brand-name:hover{
+  scale: 1.1;
+  transition: .5s;
+}

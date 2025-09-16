@@ -1,0 +1,122 @@
+#container{
+  display: flex;
+  padding: .5em; 
+  margin: .5em;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+}
+
+.bg-img{
+  position: relative;
+  height: 300px;
+  width: 250px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  flex: column;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 10px;
+  margin: 10px 5px;
+  border-radius: 5px;
+}
+
+.overlay {
+  position: absolute;
+  background-color: #00408597;
+  border-radius: 5px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  bottom: 0;
+}
+
+.button-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  padding-bottom: 2px;
+}
+
+button{
+  padding: 3px;
+  margin: 3px;
+  min-width: 15%;
+  max-width: 30%;
+}
+
+mat-icon{
+  z-index: 9;
+  
+}
+
+p {
+  text-align: center;
+  white-space: normal;
+  width: 100%;
+  font-size: large;
+  font-weight: bold;
+  color: whitesmoke;
+  margin: 0 0 5px 0;
+}
+
+
+button {
+  z-index: 9;
+}
+
+#footer {
+  position: sticky;
+  height: 60px;
+  background-color: #004085;
+  bottom: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#pagination{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10rem;
+  padding: 5px;
+  margin: 5px;
+}
+
+mat-icon{
+  padding: 3px;
+  margin: 5px;
+  transition: .5s;
+  cursor: pointer;
+  text-shadow: 3px 5px rgba(0, 0, 0, 0.487);
+}
+
+mat-icon:hover{
+  scale: 1.1;
+  transition: .5s;
+}
+
+.not-fav{
+  color: whitesmoke;
+}
+
+#next-page, #previous-page{
+  width: 3rem;
+  text-shadow: none;
+  color: whitesmoke;
+}
+
+.fav{
+  color: red;
+}
