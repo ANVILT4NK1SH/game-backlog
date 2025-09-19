@@ -4,38 +4,43 @@ import { User } from '../models/user.model';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { catchError, Observable, switchMap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class GameService {
-  private createdGame: SavedGame | null = null 
+export class GameService { 
   private apiUrl = `${environment.apiUrl}/games`;
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  saveGame(game: SavedGame) {
+  saveGame(game: SavedGame): Observable<any> {
     return this.http.post(this.apiUrl, game);
   }
 
-  likeGame(game: SavedGame) {
-    this.saveGame(game).subscribe({
-      next: (data: any) => {
-        this.createdGame = data;
-        console.log(this.createdGame);
-        return this.http.post(
-          `${this.apiUrl}/${this.createdGame?.id}/like`,
-          {}
-        );
-      },
-      error: (error) => {
-        console.error(error);
-      },
-    });
-    
+  likeGame(game: SavedGame): Observable<any> {
+    return this.http.post(`${this.apiUrl}/like`, game);    
   }
 
-  unlikeGame(game_id: number) {
-    return this.http.delete(`${this.apiUrl}/${game_id}/unlike`)
+  unlikeGame(rawg_id: number): Observable<any> {
+    console.log(rawg_id);
+    
+    return this.http.post(`${this.apiUrl}/unlike`, {rawg_id})
+  }
+
+  ownGame(game: SavedGame): Observable<any> {
+    return this.http.post(`${this.apiUrl}/own`, game);
+  }
+
+  unownGame(rawg_id: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/unown`, {rawg_id});
+  }
+
+  backlogGame(game: SavedGame): Observable<any> {
+    return this.http.post(`${this.apiUrl}/backlog`, game)
+  }
+
+  unbacklogGame(rawg_id: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/unbacklog`, {rawg_id})
   }
 }

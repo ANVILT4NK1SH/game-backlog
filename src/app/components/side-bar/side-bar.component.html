@@ -1,0 +1,24 @@
+
+  @if (extended === true) {
+    <div id="sidebar">
+      <mat-icon 
+        class="close-arrow"
+        style="color: whitesmoke;"
+        (click)="toggleSidebar()"
+      >
+        keyboard_arrow_left
+      </mat-icon>
+
+      <button id="filter-btn">Filter</button>
+    </div>
+  }@else {
+      <mat-icon
+        class="open-arrow"
+        style="color: whitesmoke;"
+        (click)="toggleSidebar()"
+      >
+        keyboard_arrow_right
+      </mat-icon>    
+  }
+  
+

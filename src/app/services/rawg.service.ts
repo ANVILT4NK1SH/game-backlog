@@ -14,5 +14,9 @@ export class RawgService {
   filterGames(filterString: string = ""): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(`${this.apiUrl}/filterGames`, {filterString})
   }
+
+  fetchGenres(){
+    
+  }
 }
 

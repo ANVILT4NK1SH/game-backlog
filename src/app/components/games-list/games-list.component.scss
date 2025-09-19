@@ -83,6 +83,7 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 20;
 }
 
 #pagination{
@@ -107,9 +108,31 @@ mat-icon:hover{
   transition: .5s;
 }
 
+.fav{
+  color: red;
+}
+
 .not-fav{
   color: whitesmoke;
 }
+
+.owned{
+  color: rgb(0, 212, 0)
+}
+
+.not-owned{
+  color: whitesmoke
+}
+
+.backlogged{
+  color: rgb(237, 254, 40);
+}
+
+.not-backlogged{
+  color: whitesmoke;
+}
+
+
 
 #next-page, #previous-page{
   width: 3rem;
@@ -117,6 +140,14 @@ mat-icon:hover{
   color: whitesmoke;
 }
 
-.fav{
-  color: red;
+#next-page-disable, #previous-page-disabled {
+  width: 3rem;
+  text-shadow: none;
+  color: grey;
+}
+
+#next-page-disable:hover,
+#previous-page-disabled:hover {
+  scale: 1;
+  cursor: default;
 }

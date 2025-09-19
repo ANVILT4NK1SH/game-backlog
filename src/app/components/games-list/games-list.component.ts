@@ -6,12 +6,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
 import { GameService } from '../../services/game.service';
+import { HttpClient } from '@angular/common/http';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-games-list',
-  imports: [MatIconModule],
+  imports: [MatIconModule, MatTooltip],
   templateUrl: './games-list.component.html',
-  styleUrl: './games-list.component.scss'
+  styleUrl: './games-list.component.scss',
 })
 export class GamesListComponent {
   games: Game[] = [];
@@ -21,22 +23,21 @@ export class GamesListComponent {
   currentPage: number = 1;
   filters: string = '';
   currentUser: User | null = null;
-  
+
   constructor(
+    private http: HttpClient,
     private rawgService: RawgService,
     private userService: UserService,
-    private gameService: GameService,
+    private gameService: GameService
   ) {}
 
   ngOnInit(): void {
     this.loadGames(this.rawgService.filterGames());
-    this.userService.currentUserSubject.subscribe(
-      (user) => {
-        this.currentUser = user;
-        console.log(this.currentUser);
-        console.log(this.currentUser?.liked_ids);  
-      }
-    );
+    this.userService.currentUserSubject.subscribe((user) => {
+      this.currentUser = user;
+      console.log(this.currentUser);
+      console.log(this.currentUser?.liked_ids);
+    });
   }
 
   loadGames(observable: Observable<ApiResponse>): void {
@@ -47,30 +48,130 @@ export class GamesListComponent {
         this.nextUrl = response.next;
         this.previousUrl = response.previous;
         console.log(response);
-        
       },
       error: (error) => {
         console.error('Error fetching games:', error);
-      }
+      },
     });
   }
 
   loadNextPage(): void {
-    if(this.nextUrl)
-   this.currentPage++
-   this.loadGames(
-     this.rawgService.filterGames(`${this.filters}&page=${this.currentPage}`)
-   );
-  }
-
-  loadPreviousPage(): void {
-    if(this.previousUrl) {
-      this.currentPage--
-      this.loadGames(this.rawgService.filterGames(`${this.filters}&page=${this.currentPage}`))
+    if (this.nextUrl) {
+      this.currentPage++;
+      this.loadGames(
+        this.rawgService.filterGames(`${this.filters}&page=${this.currentPage}`)
+      );
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
 
-  toggleLiked(game: Game) {
+  loadPreviousPage(): void {
+    if (this.previousUrl) {
+      this.currentPage--;
+      this.loadGames(
+        this.rawgService.filterGames(`${this.filters}&page=${this.currentPage}`)
+      );
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  likeGame(game: Game): void {
+    const saveGame: SavedGame = {
+      title: game.name,
+      release_date: game.released,
+      img_url: game.background_image,
+      rawg_id: game.id,
+    };
+    this.gameService.likeGame(saveGame).subscribe({
+      next: (response) => {
+        console.log('Game liked successfully:', response);
+        this.currentUser!.liked_ids.push(game.id);
+      },
+      error: (error) => {
+        console.error('Error liking game:', error);
+      },
+    });
+  }
+
+  unlikeGame(game_id: number) {
+    console.log(game_id);
     
+    this.gameService.unlikeGame(game_id).subscribe({
+      next: (response) => {
+        console.log('Game unliked successfully:', response);
+        this.currentUser!.liked_ids = this.currentUser!.liked_ids.filter(
+          (id) => id !== game_id
+        );
+      },
+      error: (error) => {
+        console.error('Error unliking game:', error);
+      },
+    });
+  }
+
+  ownGame(game: Game) {
+    const saveGame: SavedGame = {
+      title: game.name,
+      release_date: game.released,
+      img_url: game.background_image,
+      rawg_id: game.id,
+    };
+
+    this.gameService.ownGame(saveGame).subscribe({
+      next: (response) => {
+        console.log('Game marked as owned', response);
+        this.currentUser!.owned_ids.push(game.id);
+      },
+      error: (error) => {
+        console.error('Error marking game as owned:', error);
+      },
+    });
+  }
+
+  unownGame(game_id: number) {
+    this.gameService.unownGame(game_id).subscribe({
+      next: (response) => {
+        console.log('Game unowned successfully:', response);
+        this.currentUser!.owned_ids = this.currentUser!.owned_ids.filter(
+          (id) => id !== game_id
+        );
+      },
+      error: (error) => {
+        console.error('Error unowning game:', error);
+      },
+    });
+  }
+
+  backlogGame(game: Game) {
+    const saveGame: SavedGame = {
+      title: game.name,
+      release_date: game.released,
+      img_url: game.background_image,
+      rawg_id: game.id,
+    };
+
+    this.gameService.backlogGame(saveGame).subscribe({
+      next: (response) => {
+        console.log('Game added to backlog', response);
+        this.currentUser!.backlog_ids.push(game.id);
+      },
+      error: (error) => {
+        console.error('Error adding to backlog:', error);
+      },
+    });
+  }
+
+  unbacklogGame(game_id: number) {
+    this.gameService.unbacklogGame(game_id).subscribe({
+      next: (response) => {
+        console.log('Game removed from backlog successfully:', response);
+        this.currentUser!.backlog_ids = this.currentUser!.backlog_ids.filter(
+          (id) => id !== game_id
+        );
+      },
+      error: (error) => {
+        console.error('Error removing game from backlog:', error);
+      },
+    });
   }
 }

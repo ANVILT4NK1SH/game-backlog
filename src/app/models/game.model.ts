@@ -51,9 +51,8 @@ export interface ApiResponse {
 
 export interface SavedGame {
   id?: number;
-  name: string;
+  title: string;
   release_date: string;
   img_url: string,
   rawg_id: number,
-  liked?: boolean;
 }

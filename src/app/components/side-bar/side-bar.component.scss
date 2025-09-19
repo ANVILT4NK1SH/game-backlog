@@ -1,0 +1,49 @@
+#sidebar{
+  position: fixed;
+  z-index: 15;
+  width: 150px;
+  height: 90%;
+  background-color: #004085db;
+  display: flex;
+  flex-direction: column;  
+}
+
+.open-arrow{
+  position: fixed;
+  z-index: 20;
+  padding: 3px;
+  margin: 3px;
+}
+
+.close-arrow{
+  z-index: 20;
+  padding: 3px;
+  margin: 3px;
+}
+
+.open-arrow:hover, .close-arrow:hover{
+  cursor: pointer;
+  scale: 1.1;
+}
+
+button{
+  background: none;
+  border: 1px solid white;
+  border-radius: 4px;
+  color: white;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  text-decoration: none;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100px;
+  transition: 0.5s;
+  align-self: center;
+}
+
+button:hover{
+  background-color: white;
+    color: #004085;
+    scale: 1.1;
+    transition: 0.5s;
+}
