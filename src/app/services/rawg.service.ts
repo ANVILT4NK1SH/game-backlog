@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { ApiResponse } from '../models/game.model';
+import { ApiResponse, Genre } from '../models/game.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +11,22 @@ export class RawgService {
   private apiUrl = `${environment.apiUrl}/rawg`
   constructor(private http: HttpClient) {}
 
+
   filterGames(filterString: string = ""): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(`${this.apiUrl}/filterGames`, {filterString})
+    return this.http.post<ApiResponse>(`${this.apiUrl}/filterGames`, {filterString}).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  fetchGenres(){
-    
+  getGenres(): Observable<Genre[]> {
+    return this.http.get<Genre[]>(`${this.apiUrl}/genres`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    const errorMessage = error.error?.error || error.message || 'An error occured';
+    return throwError(() => new Error(errorMessage));
   }
 }
 

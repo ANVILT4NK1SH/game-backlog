@@ -1,11 +1,14 @@
 #sidebar{
   position: fixed;
-  z-index: 15;
-  width: 150px;
-  height: 90%;
+  z-index: 19;
+  width: 200px;
+  height: 82vh;
   background-color: #004085db;
+  color: whitesmoke;
   display: flex;
-  flex-direction: column;  
+  flex-direction: column;
+  overflow: auto;
+  padding: 5px;
 }
 
 .open-arrow{
@@ -13,17 +16,33 @@
   z-index: 20;
   padding: 3px;
   margin: 3px;
+  color: whitesmoke;
 }
 
 .close-arrow{
-  z-index: 20;
+  position: fixed;
+  z-index: 25;
   padding: 3px;
   margin: 3px;
+  color: whitesmoke;
+  left: 150px;
 }
 
 .open-arrow:hover, .close-arrow:hover{
   cursor: pointer;
   scale: 1.1;
+}
+
+.reset{
+  display: flex;
+  flex-direction: row;
+}
+
+#reset-form-btn, #reset-filter-btn{
+  cursor: pointer;
+  padding: 3px;
+  margin: 3px;
+  scale: .5;
 }
 
 button{
@@ -46,4 +65,18 @@ button:hover{
     color: #004085;
     scale: 1.1;
     transition: 0.5s;
+}
+
+#search{
+  width: 90%;
+}
+
+.form-group{
+  padding: 3px;
+  margin: 5px;
+}
+
+.checkbox-group{
+  display: flex;
+  flex-direction: column;
 }

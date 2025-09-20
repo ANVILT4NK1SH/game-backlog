@@ -7,11 +7,13 @@ import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
 import { GameService } from '../../services/game.service';
 import { HttpClient } from '@angular/common/http';
-import { MatTooltip } from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { SideBarComponent } from '../side-bar/side-bar.component';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-games-list',
-  imports: [MatIconModule, MatTooltip],
+  imports: [MatIconModule, MatTooltipModule, SideBarComponent],
   templateUrl: './games-list.component.html',
   styleUrl: './games-list.component.scss',
 })
@@ -25,14 +27,20 @@ export class GamesListComponent {
   currentUser: User | null = null;
 
   constructor(
-    private http: HttpClient,
     private rawgService: RawgService,
     private userService: UserService,
-    private gameService: GameService
+    private gameService: GameService,
+    private sharedService: SharedService
   ) {}
 
   ngOnInit(): void {
-    this.loadGames(this.rawgService.filterGames());
+    this.loadGames('');
+
+    this.sharedService.getFilterUpdates().subscribe((filterString) => {
+      this.filters = filterString;
+      this.currentPage = 1;
+      this.loadGames(filterString);
+    });
     this.userService.currentUserSubject.subscribe((user) => {
       this.currentUser = user;
       console.log(this.currentUser);
@@ -40,14 +48,14 @@ export class GamesListComponent {
     });
   }
 
-  loadGames(observable: Observable<ApiResponse>): void {
-    observable.subscribe({
+  loadGames(filterString: string): void {
+    this.sharedService.loadFilteredGames(`${filterString}&page=${this.currentPage}`).subscribe({
       next: (response: ApiResponse) => {
         this.games = response.results;
         this.totalCount = response.count;
         this.nextUrl = response.next;
         this.previousUrl = response.previous;
-        console.log(response);
+        console.log('Games loaded:', response);
       },
       error: (error) => {
         console.error('Error fetching games:', error);
@@ -58,9 +66,7 @@ export class GamesListComponent {
   loadNextPage(): void {
     if (this.nextUrl) {
       this.currentPage++;
-      this.loadGames(
-        this.rawgService.filterGames(`${this.filters}&page=${this.currentPage}`)
-      );
+      this.loadGames(this.filters);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
@@ -68,9 +74,7 @@ export class GamesListComponent {
   loadPreviousPage(): void {
     if (this.previousUrl) {
       this.currentPage--;
-      this.loadGames(
-        this.rawgService.filterGames(`${this.filters}&page=${this.currentPage}`)
-      );
+      this.loadGames(this.filters);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }

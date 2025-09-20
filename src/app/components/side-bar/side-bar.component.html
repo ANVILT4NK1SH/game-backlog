@@ -8,8 +8,49 @@
       >
         keyboard_arrow_left
       </mat-icon>
+      
+      <h2>Filter Games</h2>
+      <div class="reset">
+        <button id="reset-form-btn" (click)="resetForm()">reset form</button>
+        <button id="reset-filter-btn" (click)="resetFilter()">reset filter</button>
+      </div>
+      
+      <form [formGroup]="filterForm">
+        <div class="form-group">
+          <input id="search" formControlName="search" placeholder="Search games...">
+        </div>
 
-      <button id="filter-btn">Filter</button>
+        <div class="form-group">
+          <label for="releaseDateBegin">Release Date (Start)</label>
+          <input type="date" id="releaseDateBegin" formControlName="releaseDateBegin" >
+        </div>
+
+        <div class="form-group">
+          <label for="releaseDateEnd">Release Date (End)</label>
+          <input id="releaseDateEnd" formControlName="releaseDateEnd" type="date" >
+        </div>
+        <div class="form-group">
+          <label>Genres</label>
+          @if (genres.length > 0) {
+            <div class="checkbox-group">
+              @for (genre of genres; track $index) {
+                <mat-checkbox [formControl] = "genresArray.controls[$index]">
+                  {{genre.name}}
+                </mat-checkbox>
+              }
+            </div>
+            
+          }@else{
+            <p>Loading genres...</p>
+          }
+        </div>
+        <button 
+        id="filter-btn"
+        (click)="onFilterBtnClick()"
+        >
+          {{loading ? 'Loading...' : 'Filter Games'}}
+        </button>
+      </form>
     </div>
   }@else {
       <mat-icon

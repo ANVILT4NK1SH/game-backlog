@@ -56,3 +56,9 @@ export interface SavedGame {
   img_url: string,
   rawg_id: number,
 }
+
+export interface Genre {
+  id: number;
+  name: string;
+  slug: string;
+}
