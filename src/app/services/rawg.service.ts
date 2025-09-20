@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { ApiResponse, Genre } from '../models/game.model';
+import { ApiResponse, Genre, PlatformDetails } from '../models/game.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +24,12 @@ export class RawgService {
     );
   }
 
+  getPlatforms(): Observable<PlatformDetails[]> {
+    return this.http.get<PlatformDetails[]>(`${this.apiUrl}/platforms`).pipe(
+      catchError(this.handleError)
+    );
+  }
+  
   private handleError(error: HttpErrorResponse): Observable<never> {
     const errorMessage = error.error?.error || error.message || 'An error occured';
     return throwError(() => new Error(errorMessage));

@@ -1,5 +1,5 @@
 
-  @if (extended === true) {
+  @if (sidebarExtended === true) {
     <div id="sidebar">
       <mat-icon 
         class="close-arrow"
@@ -30,18 +30,19 @@
           <input id="releaseDateEnd" formControlName="releaseDateEnd" type="date" >
         </div>
         <div class="form-group">
-          <label>Genres</label>
-          @if (genres.length > 0) {
-            <div class="checkbox-group">
-              @for (genre of genres; track $index) {
-                <mat-checkbox [formControl] = "genresArray.controls[$index]">
-                  {{genre.name}}
-                </mat-checkbox>
-              }
-            </div>
-            
-          }@else{
-            <p>Loading genres...</p>
+          <label (click)="toggleGenres()">Genres <mat-icon class="extend-categories-btn">@if(genresExtended){keyboard_arrow_up}@else {keyboard_arrow_down}  </mat-icon></label>
+          @if (genresExtended) {
+            @if (genres.length > 0) {
+              <div class="checkbox-group">
+                @for (genre of genres; track $index) {
+                  <mat-checkbox [formControl] = "genresArray.controls[$index]">
+                    {{genre.name}}
+                  </mat-checkbox>
+                }
+              </div>            
+            }@else{
+              <p>Loading genres...</p>
+            }
           }
         </div>
         <button 

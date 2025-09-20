@@ -3,21 +3,22 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SharedService } from '../../services/shared.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Genre } from '../../models/game.model';
+import { Genre, PlatformDetails } from '../../models/game.model';
 import { RawgService } from '../../services/rawg.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-side-bar',
-  imports: [MatIconModule, MatTooltipModule, MatCheckboxModule, MatButton, ReactiveFormsModule],
+  imports: [MatIconModule, MatTooltipModule, MatCheckboxModule, ReactiveFormsModule],
   templateUrl: './side-bar.component.html',
   styleUrl: './side-bar.component.scss',
 })
 export class SideBarComponent {
-  extended: boolean = false;
+  sidebarExtended: boolean = false;
+  genresExtended: boolean = false;
   filterForm: FormGroup;
   genres: Genre[] = [];
+  platforms: PlatformDetails[] = [];
   loading = false;
   error: string | null = null;
 
@@ -31,6 +32,7 @@ export class SideBarComponent {
       releaseDateBegin: [''],
       releaseDateEnd: [''],
       genres: this.fb.array<FormControl<boolean | null>>([]),
+      platforms: this.fb.array<FormControl<boolean | null>>([])
     });
   }
 
@@ -54,9 +56,30 @@ export class SideBarComponent {
       },
     });
   }
+  loadPlatforms(): void {
+    this.loading = true;
+    this.error = null;
+    this.rawgService.getPlatforms().subscribe({
+      next: (platforms) => {
+        this.platforms = platforms;
+        const platformControls = platforms.map(() => new FormControl<boolean | null>(false));
+        this.filterForm.setControl('platforms', this.fb.array<FormControl<boolean | null>>(platformControls));
+        this.loading = false;
+      },
+      error: (err) => {
+        this.error = err.message;
+        this.loading = false;
+      },
+    });
+  }
+
+
 
   get genresArray(): FormArray<FormControl<boolean | null>> {
     return this.filterForm.get('genres') as FormArray<FormControl<boolean | null>>;
+  }
+  get platformsArray(): FormArray<FormControl<boolean | null>> {
+    return this.filterForm.get('platforms') as FormArray<FormControl<boolean | null>>;
   }
 
   onFilterBtnClick(): void {
@@ -67,6 +90,13 @@ export class SideBarComponent {
     if (selectedGenres.length > 0) {
       filters.push(`genres=${selectedGenres.join(',')}`);
     }
+    const selectedPlatforms = this.platforms
+      .filter((_, index) => this.platformsArray.at(index).value)
+      .map((platform) => platform.slug);
+    if (selectedPlatforms.length > 0) {
+      filters.push(`platforms=${selectedPlatforms.join(',')}`);
+    }
+
     const search = this.filterForm.get('search')?.value;
     if (search) {
       filters.push(`search=${encodeURIComponent(search)}`);
@@ -90,6 +120,12 @@ export class SideBarComponent {
   }
 
   toggleSidebar(): void {
-    this.extended = !this.extended;
+    this.sidebarExtended = !this.sidebarExtended;
   }
+
+  toggleGenres(): void {
+    this.genresExtended = !this.genresExtended;
+  }
+
+
 }

@@ -16,8 +16,8 @@ export interface Platform {
     slug: string;
     name: string;
   };
-  released_at: string;
-  requirements: PlatformRequirements;
+  released_at?: string;
+  requirements?: PlatformRequirements;
 }
 
 export interface Game {
@@ -58,6 +58,12 @@ export interface SavedGame {
 }
 
 export interface Genre {
+  id: number;
+  name: string;
+  slug: string;
+}
+
+export interface PlatformDetails {
   id: number;
   name: string;
   slug: string;
