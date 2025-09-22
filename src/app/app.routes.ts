@@ -2,22 +2,23 @@ import { Routes } from '@angular/router';
 import { noAuthGuard } from './no-auth.guard';
 import { authGuard } from './auth.guard';
 import { UserResolverService } from './services/user-resolver.service';
+import { LoginComponent } from './auth/login/login.component';
 
 export const routes: Routes = [
   {
+    path: '',
+    redirectTo: '/login',
+    pathMatch: 'full',
+  },
+  {
     path: 'login',
-    loadComponent: () =>
-      import('./auth/login/login.component').then(
-        (m) => m.LoginComponent
-      ),
+    component: LoginComponent,
     canActivate: [noAuthGuard],
   },
   {
     path: 'signup',
     loadComponent: () =>
-      import('./auth/signup/signup.component').then(
-        (c) => c.SignUpComponent
-      ),
+      import('./auth/signup/signup.component').then((c) => c.SignUpComponent),
     canActivate: [noAuthGuard],
   },
   {
@@ -35,17 +36,17 @@ export const routes: Routes = [
       import('./components/likes-list/likes-list.component').then(
         (m) => m.LikesListComponent
       ),
-      canActivate: [authGuard],
-      resolve: {userData: UserResolverService},
+    canActivate: [authGuard],
+    resolve: { userData: UserResolverService },
   },
   {
     path: 'owned',
-    loadComponent: () => 
+    loadComponent: () =>
       import('./components/owned-list/owned-list.component').then(
         (m) => m.OwnedListComponent
       ),
-      canActivate: [authGuard],
-      resolve: {userData: UserResolverService},
+    canActivate: [authGuard],
+    resolve: { userData: UserResolverService },
   },
   {
     path: 'backlog',
@@ -53,7 +54,12 @@ export const routes: Routes = [
       import('./components/backlog-list/backlog-list.component').then(
         (m) => m.BacklogListComponent
       ),
-      canActivate: [authGuard],
-      resolve: {userData: UserResolverService},
-  }
+    canActivate: [authGuard],
+    resolve: { userData: UserResolverService },
+  },
+  {
+    path: '**',
+    redirectTo: '/login',
+    pathMatch: 'full',
+  },
 ];
