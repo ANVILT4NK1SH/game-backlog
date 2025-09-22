@@ -3,12 +3,23 @@ div{
 }
 
 .container{
+  display: flex;
+  flex-direction: column;
   justify-self: center;
+  justify-content: center;
+  align-items: center;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .error{
   color: red
 }
 
 .result{
-  color: red;
+  color: rgb(72, 255, 0);
 }

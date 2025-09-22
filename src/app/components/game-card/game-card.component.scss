@@ -26,6 +26,7 @@
   padding: 0;
   margin: 0;
   bottom: 0;
+  cursor: default;
 }
 
 .button-container {
@@ -141,18 +142,34 @@ img {
 }
 
 .details {
-  height: fit-content;
-  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 5px;
   margin: 5px;
   align-self: self-start;
-  width: 80%;
+  width: 100%;
 }
 
+.img-and-details{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .details p {
+  text-align: center;
+  width: 100%;
   padding: 2px;
   margin: 2px;
 }
+
+.img-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
 img{
   height: 30%;
+  width: auto;
 }

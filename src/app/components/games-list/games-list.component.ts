@@ -25,6 +25,7 @@ export class GamesListComponent {
   previousUrl: string = '';
   currentPage: number = 1;
   filters: string = '';
+  errorMessage: string = '';
 
   constructor(
     private sharedService: SharedService
@@ -49,7 +50,8 @@ export class GamesListComponent {
         this.previousUrl = response.previous;
         console.log('Games loaded:', response);
       },
-      error: (error) => {
+      error: (error) => {  
+        this.errorMessage = "Error fetching games!"
         console.error('Error fetching games:', error);
       },
     });

@@ -1,64 +1,65 @@
 <app-side-bar/>
-<div id="container">
-  @for (game of games; track $index) {
-    <app-game-card [game]="game"/>
-    <!-- <div class="bg-img" style="background-image: url({{game.background_image}});">
-      <div class="overlay">
-        <p>{{game.name}}</p>
-        <div class="button-container">
-          @if(currentUser?.liked_ids?.includes(game.id)){
-            <mat-icon
-            matTooltip="Remove favorite"
-            aria-label="remove favorite"
-            class="fav"
-            (click)="unlikeGame(game.id)">
-              favorite
-            </mat-icon>
-          }@else  {
-            <mat-icon
-            matTooltip="Add to favorites"
-            class="not-fav"
-            (click)="likeGame(game)"
-            >
-              favorite
-            </mat-icon>
-          }
-          
-          @if(currentUser?.owned_ids?.includes(game.id)){
-            <mat-icon
-            matTooltip="Remove from owned"
-            class="owned"
-            (click)="unownGame(game.id)">
-              price_check
-            </mat-icon>
-          }@else {
-            <mat-icon 
-            matTooltip="Add to owned"
-            class="not-owned"
-            (click)="ownGame(game)">
-              price_check
-            </mat-icon>
-          }
+<div id="container"> 
+    @for (game of games; track $index) {
 
-          @if(currentUser?.backlog_ids?.includes(game.id)){
-            <mat-icon
-            matTooltip="Remove from backlog"
-            class="backlogged"
-            (click)="unbacklogGame(game.id)">
-              playlist_remove
-            </mat-icon>
-          }@else {
-            <mat-icon 
-            matTooltip="Add to backlog"
-            class="not-backlogged"
-            (click)="backlogGame(game)">
-              playlist_add
-            </mat-icon>
-          }       
+      <app-game-card [game]="game"/>
+      <!-- <div class="bg-img" style="background-image: url({{game.background_image}});">
+        <div class="overlay">
+          <p>{{game.name}}</p>
+          <div class="button-container">
+            @if(currentUser?.liked_ids?.includes(game.id)){
+              <mat-icon
+              matTooltip="Remove favorite"
+              aria-label="remove favorite"
+              class="fav"
+              (click)="unlikeGame(game.id)">
+                favorite
+              </mat-icon>
+            }@else  {
+              <mat-icon
+              matTooltip="Add to favorites"
+              class="not-fav"
+              (click)="likeGame(game)"
+              >
+                favorite
+              </mat-icon>
+            }
+            
+            @if(currentUser?.owned_ids?.includes(game.id)){
+              <mat-icon
+              matTooltip="Remove from owned"
+              class="owned"
+              (click)="unownGame(game.id)">
+                price_check
+              </mat-icon>
+            }@else {
+              <mat-icon 
+              matTooltip="Add to owned"
+              class="not-owned"
+              (click)="ownGame(game)">
+                price_check
+              </mat-icon>
+            }
+
+            @if(currentUser?.backlog_ids?.includes(game.id)){
+              <mat-icon
+              matTooltip="Remove from backlog"
+              class="backlogged"
+              (click)="unbacklogGame(game.id)">
+                playlist_remove
+              </mat-icon>
+            }@else {
+              <mat-icon 
+              matTooltip="Add to backlog"
+              class="not-backlogged"
+              (click)="backlogGame(game)">
+                playlist_add
+              </mat-icon>
+            }       
+          </div>
         </div>
-      </div>
-    </div> -->
-  }
+      </div> -->
+    }
 </div>
 
 <div id="footer">
