@@ -1,9 +1,22 @@
 <nav class="stellar-navbar">
-  <div class="brand-name"> 
-    <a routerLink="/games-list" matTooltip="Home">Game Backlog</a>
+  <div class="brand-name">
+    <div class="site-name">
+      <a routerLink="/games-list" matTooltip="Home">Game Backlog</a>
+    </div>
+    
+  </div>
+  <div class="lists-btns">
+    <button routerLink="/likes">
+      Liked List<mat-icon>favorite</mat-icon>
+    </button>
+    <button routerLink="/owned">
+      Owned List<mat-icon>price_check</mat-icon>
+    </button>
+    <button routerLink="/backlog">
+      Backlog<mat-icon>playlist_add</mat-icon>
+    </button>
   </div>
   <div class="nav-links">
-
     @if (authService.isLoggedIn()){
       <button (click)="logout()">Logout</button>
     } @else {

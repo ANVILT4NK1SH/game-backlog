@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { ApiResponse, Genre, PlatformDetails } from '../models/game.model';
+import { ApiResponse, Game, Genre, PlatformDetails } from '../models/game.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,12 @@ export class RawgService {
     return this.http.post<ApiResponse>(`${this.apiUrl}/filterGames`, {filterString}).pipe(
       catchError(this.handleError)
     );
+  }
+
+  getGameById(rawg_id: number){
+    return this.http.post<Game>(`${this.apiUrl}/getGameById`, {rawg_id}).pipe(
+      catchError(this.handleError)
+    )
   }
 
   getGenres(): Observable<Genre[]> {

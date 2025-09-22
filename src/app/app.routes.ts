@@ -28,5 +28,32 @@ export const routes: Routes = [
       ),
     canActivate: [authGuard],
     resolve: { userData: UserResolverService },
+  },
+  {
+    path: 'likes',
+    loadComponent: () =>
+      import('./components/likes-list/likes-list.component').then(
+        (m) => m.LikesListComponent
+      ),
+      canActivate: [authGuard],
+      resolve: {userData: UserResolverService},
+  },
+  {
+    path: 'owned',
+    loadComponent: () => 
+      import('./components/owned-list/owned-list.component').then(
+        (m) => m.OwnedListComponent
+      ),
+      canActivate: [authGuard],
+      resolve: {userData: UserResolverService},
+  },
+  {
+    path: 'backlog',
+    loadComponent: () =>
+      import('./components/backlog-list/backlog-list.component').then(
+        (m) => m.BacklogListComponent
+      ),
+      canActivate: [authGuard],
+      resolve: {userData: UserResolverService},
   }
 ];

@@ -29,8 +29,9 @@
           <label for="releaseDateEnd">Release Date (End)</label>
           <input id="releaseDateEnd" formControlName="releaseDateEnd" type="date" >
         </div>
+
         <div class="form-group">
-          <label (click)="toggleGenres()">Genres <mat-icon class="extend-categories-btn">@if(genresExtended){keyboard_arrow_up}@else {keyboard_arrow_down}  </mat-icon></label>
+          <label (click)="toggleGenres()" class="section-label">Genres <mat-icon class="extend-categories-btn">{{genresExtended ? "keyboard_arrow_up" : "keyboard_arrow_down"}}</mat-icon></label>
           @if (genresExtended) {
             @if (genres.length > 0) {
               <div class="checkbox-group">
@@ -45,6 +46,24 @@
             }
           }
         </div>
+
+        <div class="form-group">
+          <label (click)="togglePlatforms()" class="section-label">Platforms <mat-icon>{{platformsExtended ? "keyboard_arrow_up" : "keyboard_arrow_down"}}</mat-icon></label>
+          @if (platformsExtended) {
+            @if (platforms.length > 0) {
+              <div class="checkbox-group">
+                @for (platform of platforms; track $index) {
+                  <mat-checkbox [formControl] = "platformsArray.controls[$index]">
+                    {{platform.name}}
+                  </mat-checkbox>
+                }
+              </div>            
+            }@else{
+              <p>Loading platforms...</p>
+            }
+          }
+        </div>
+
         <button 
         id="filter-btn"
         (click)="onFilterBtnClick()"

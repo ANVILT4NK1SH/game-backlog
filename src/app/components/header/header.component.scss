@@ -16,6 +16,7 @@
 .stellar-navbar .brand-name {
   transition: .5s;
   padding: 10px;
+  width: 30%;
 }
 
 .stellar-navbar .brand-name a {
@@ -30,12 +31,14 @@
 .stellar-navbar .nav-links {
   display: flex;
   align-items: center;
+  justify-content: right;
   gap: 1rem;
+  width: 30%;
   /* Adds space between navigation items */
 }
 
 .stellar-navbar .nav-links a,
-.stellar-navbar .nav-links button {
+button {
   background: none;
   border: 1px solid white;
   /* Border makes it stand out */
@@ -57,7 +60,7 @@
 }
 
 /* Specific style for the logout button to differentiate it, if needed */
-.stellar-navbar .nav-links button {
+button {
   background-color: transparent;
   color: white;
   border-color: white;
@@ -65,15 +68,42 @@
   transition: 0.5s;
 }
 
-.stellar-navbar .nav-links button:hover {
+button:hover {
   color: #004085;
   background-color: white;
   border-color: #004085;
   scale: 1.1;
   transition: 0.5s;
 }
+.site-name{
+  width: fit-content;
+  height: fit-content;
+  transition: 0.5s;
+}
 
-.stellar-navbar .brand-name:hover{
+.site-name:hover{
   scale: 1.1;
-  transition: .5s;
+  transition: 0.5s;
+}
+
+.lists-btns{
+  display: flex;
+  width: 30%;
+  padding: 10px;
+  margin: 3px;
+  justify-content: center;
+  align-items: center;
+}
+
+button mat-icon{
+  scale: 0.7;
+}
+
+.lists-btns button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3px;
+  padding-left: 10px;
+  margin: 5px;
 }

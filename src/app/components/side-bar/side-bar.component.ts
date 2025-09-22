@@ -16,6 +16,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 export class SideBarComponent {
   sidebarExtended: boolean = false;
   genresExtended: boolean = false;
+  platformsExtended: boolean = false;
   filterForm: FormGroup;
   genres: Genre[] = [];
   platforms: PlatformDetails[] = [];
@@ -38,6 +39,7 @@ export class SideBarComponent {
 
   ngOnInit(): void {
     this.loadGenres();
+    this.loadPlatforms();
   }
 
   loadGenres(): void {
@@ -56,6 +58,7 @@ export class SideBarComponent {
       },
     });
   }
+
   loadPlatforms(): void {
     this.loading = true;
     this.error = null;
@@ -92,7 +95,7 @@ export class SideBarComponent {
     }
     const selectedPlatforms = this.platforms
       .filter((_, index) => this.platformsArray.at(index).value)
-      .map((platform) => platform.slug);
+      .map((platform) => platform.id);
     if (selectedPlatforms.length > 0) {
       filters.push(`platforms=${selectedPlatforms.join(',')}`);
     }
@@ -121,10 +124,16 @@ export class SideBarComponent {
 
   toggleSidebar(): void {
     this.sidebarExtended = !this.sidebarExtended;
+    this.genresExtended = false
+    this.platformsExtended = false
   }
 
   toggleGenres(): void {
     this.genresExtended = !this.genresExtended;
+  }
+
+  togglePlatforms(): void {
+    this.platformsExtended = !this.platformsExtended
   }
 
 

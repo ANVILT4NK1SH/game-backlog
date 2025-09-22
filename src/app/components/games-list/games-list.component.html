@@ -1,7 +1,8 @@
 <app-side-bar/>
 <div id="container">
   @for (game of games; track $index) {
-    <div class="bg-img" style="background-image: url({{game.background_image}});">
+    <app-game-card [game]="game"/>
+    <!-- <div class="bg-img" style="background-image: url({{game.background_image}});">
       <div class="overlay">
         <p>{{game.name}}</p>
         <div class="button-container">
@@ -56,7 +57,7 @@
           }       
         </div>
       </div>
-    </div>
+    </div> -->
   }
 </div>
 

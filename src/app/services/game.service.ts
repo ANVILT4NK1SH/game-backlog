@@ -25,7 +25,7 @@ export class GameService {
   unlikeGame(rawg_id: number): Observable<any> {
     console.log(rawg_id);
     
-    return this.http.post(`${this.apiUrl}/unlike`, {rawg_id})
+    return this.http.post(`${this.apiUrl}/unlike`, {rawg_id});
   }
 
   ownGame(game: SavedGame): Observable<any> {
@@ -37,10 +37,22 @@ export class GameService {
   }
 
   backlogGame(game: SavedGame): Observable<any> {
-    return this.http.post(`${this.apiUrl}/backlog`, game)
+    return this.http.post(`${this.apiUrl}/backlog`, game);
   }
 
   unbacklogGame(rawg_id: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/unbacklog`, {rawg_id})
+    return this.http.post(`${this.apiUrl}/unbacklog`, {rawg_id});
+  }
+
+  getLikes(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/userlikes`);
+  }
+
+  getOwned(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/userowned`);
+  }
+
+  getBacklog(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/userbacklog`);
   }
 }
