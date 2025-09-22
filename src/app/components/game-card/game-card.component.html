@@ -34,9 +34,9 @@
     </div>
   }
   <div (click)="openGameDetails(game)" class="bg-img" style="background-image: url({{game.background_image}});">
-    <div class="overlay">
+    <div class="overlay" (click)="$event.stopPropagation()">
       <p>{{game.name}}</p>
-      <div class="button-container">
+      <div class="button-container" >
         @if(currentUser?.liked_ids?.includes(game.id)){
           <mat-icon
           matTooltip="Remove favorite"
@@ -102,10 +102,13 @@
         </div>
 
         <div class="img-and-details">
-          <img
-          src={{gameDetail?.background_image}}
-          alt=""
-          />
+          <div class="img-conatainer">
+            <img
+              src={{gameDetail?.background_image}}
+              alt={{gameDetail?.name}}
+            />
+          </div>
+          
           <div class="details">
             <p>Release Date: {{gameDetail?.released}}</p>
             <p>MetaCritic Rating: {{gameDetail?.metacritic}} / 100</p>
@@ -125,9 +128,9 @@
   }
   
   <div class="bg-img" (click)="openGameDetails(game)" style="background-image: url({{game.img_url}});">
-    <div class="overlay">
+    <div class="overlay" (click)="$event.stopPropagation()">
       <p>{{game.title}}</p>
-      <div class="button-container">
+      <div class="button-container" >
         @if(currentUser?.liked_ids?.includes(game.rawg_id)){
           <mat-icon
           matTooltip="Remove favorite"

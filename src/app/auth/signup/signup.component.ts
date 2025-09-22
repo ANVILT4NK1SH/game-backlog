@@ -16,12 +16,13 @@ export class SignUpComponent {
   result = signal('');
   timeLeft = signal(5);
   isRunning: boolean = false;
+  apiErrors: string[] = []
   private sub: Subscription | null = null;
 
   constructor(private authService: AuthService, private router: Router) {
     this.signupForm = new FormGroup({
       username: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required),
       password_confirmation: new FormControl('', Validators.required),
     }, {validators: passwordMatchValidator()});
@@ -51,19 +52,36 @@ export class SignUpComponent {
     }
   }
 
-  signup() {
-    this.authService.signup(this.signupForm.value).subscribe({
-      next: (data) => {
-        console.log(data);
-        this.navigationTimer();
-        this.result.set(`User Created! You will be returned to login screen in ${this.timeLeft()}`); 
-        
-      },
-      error: (error) => {
-        this.result.set(`Error creating user: ${error.error.error}`);
-        console.error(error);
-      }
-    })
+  signup(): void {
+    if(this.signupForm.valid){
+      this.authService.signup(this.signupForm.value).subscribe({
+        next: (data) => {
+          console.log(data);
+          this.navigationTimer();
+          this.result.set(`User Created! You will be returned to login screen in ${this.timeLeft()} seconds.`); 
+        },
+        error: (err) => {
+         if (err.status === 422) {
+            // Handle specific validation errors
+            if (err.error && err.error.errors) {
+              this.apiErrors = err.error.errors;
+              // Map the server-side errors to the specific form controls
+              err.error.errors.forEach((errorMsg: string) => {
+                if (errorMsg.includes('Username')) {
+                  this.signupForm.get('username')?.setErrors({ serverError: errorMsg });
+                }
+                if (errorMsg.includes('Email')) {
+                  this.signupForm.get('email')?.setErrors({ serverError: errorMsg });
+                }
+              });
+            }
+          } else {
+            this.apiErrors.push('An unexpected error occurred.');
+          }
+        }
+      });
+    }
+    
   }
 
   ngOnDestroy(){

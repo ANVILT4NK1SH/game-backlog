@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   username: string = '';
   password: string = '';
+  errorMessage: string = '';
 
   constructor(
     private authService: AuthService,
@@ -26,7 +27,11 @@ export class LoginComponent {
         this.router.navigate(['/games-list']);
       },
       error: (error: any) => {
-        console.error('Login error', error);
+        if(error.status === 401){
+          this.errorMessage = "Username or Password incorrect!"
+        } else {
+          this.errorMessage = "Unknown Error!"
+        }
       },
     });
   }

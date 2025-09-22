@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -14,7 +14,9 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   signup(user: any){
-    return this.http.post(`${this.apiUrl}/users`, user);
+    return this.http.post(`${this.apiUrl}/users`, user).pipe(
+      catchError(this.handleError)
+    );
   }
 
   login(username: string, password: string){
@@ -44,5 +46,16 @@ export class AuthService {
     localStorage.removeItem('token');
     this.tokenSubject.next(null);
     this.router.navigate(['/login'])
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'An Unknown error occured!';
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      errorMessage = `Server returned code: ${error.status}, body was: ${JSON.stringify(error.error)}`; 
+    }
+    console.error(errorMessage);
+    return throwError(() => error)
   }
 }
