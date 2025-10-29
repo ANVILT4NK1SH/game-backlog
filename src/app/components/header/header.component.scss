@@ -2,7 +2,8 @@
   position: sticky;
   top: 0;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   background-color: #004085;
   /* Primary color for the navbar */
@@ -13,10 +14,23 @@
   box-shadow: 0px 3px black;
 }
 
+.top-container{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.bottom-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
 .stellar-navbar .brand-name {
   transition: .5s;
   padding: 10px;
-  width: 30%;
+  width: 100%;
 }
 
 .stellar-navbar .brand-name a {
@@ -33,7 +47,7 @@
   align-items: center;
   justify-content: right;
   gap: 1rem;
-  width: 30%;
+  width: 50%;
   /* Adds space between navigation items */
 }
 
@@ -76,8 +90,6 @@ button:hover {
   transition: 0.5s;
 }
 .site-name{
-  width: fit-content;
-  height: fit-content;
   transition: 0.5s;
 }
 
@@ -88,9 +100,7 @@ button:hover {
 
 .lists-btns{
   display: flex;
-  flex-wrap: wrap;
   width: 30%;
-  padding: 10px;
   margin: 3px;
   justify-content: center;
   align-items: center;
