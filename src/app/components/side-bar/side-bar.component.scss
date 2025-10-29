@@ -2,7 +2,7 @@
   position: fixed;
   z-index: 19;
   width: 200px;
-  height: 82vh;
+  height: calc(100vh - 8rem);
   background-color: #004085db;
   color: whitesmoke;
   display: flex;

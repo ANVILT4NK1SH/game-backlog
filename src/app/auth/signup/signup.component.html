@@ -17,7 +17,7 @@
       @if (signupForm.get('email')?.hasError('email') && signupForm.get('email')?.touched) {
         <div class="error">Correct Email Address is required! example&#64;email.com</div>
       }
-      
+
       @if(signupForm.get('email')?.hasError('serverError')) {
         <div class="error">{{signupForm.get('email')?.getError('serverError')}}</div>
       }
@@ -35,13 +35,13 @@
       <input type="password" formControlName="password_confirmation" placeholder="Confirm Password">
       @if (signupForm.get('password_confirmation')?.hasError('required') && signupForm.get('password_confirmation')?.touched) {
         <div class="error">Confirm Password is required!</div>
+      }@if (signupForm.hasError('passwordMismatch') && signupForm.get('password_confirmation')?.touched) {
+      <div class="error">Passwords do not match!</div>
       }
     </div>
-    @if (signupForm.hasError('passwordMismatch') && signupForm.get('password_confirmation')?.touched) {
-      <div class="error">Passwords do not match!</div>
-    }
+
     <button type="submit" [disabled]="signupForm.invalid">Submit</button>
-    
+
   </form>
   <div class="result">{{ result() }}</div>
   @if (apiErrors.length > 0) {
