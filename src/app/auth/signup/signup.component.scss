@@ -8,9 +8,18 @@ div{
   justify-self: center;
   justify-content: center;
   align-items: center;
+  padding: 2rem;
 }
 
 form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-group{
+  padding: .25rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
